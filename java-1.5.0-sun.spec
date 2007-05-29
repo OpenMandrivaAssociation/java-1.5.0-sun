@@ -41,7 +41,7 @@
 
 Name:		java-%{javaver}-%{origin}
 Version:	%{javaver}.%{buildver}
-Release:	%mkrel 6
+Release:	%mkrel 7
 Summary:	Java Runtime Environment for %{name}
 License:	Operating System Distributor License for Java (DLJ)
 Group:		Development/Java
@@ -55,7 +55,7 @@ Source6:	java.sh
 Source7:	java.csh
 Patch0:		jdk-1.5.0_10-fix-control-panel.patch
 Provides:	jre-%{javaver}-%{origin} = %{version}-%{release}
-Provides:	jre-%{origin} = %{version}-%{release} j2re = %{version}- %{release}
+Provides:	jre-%{origin} = %{version}-%{release} j2re = %{version}-%{release}
 Provides:	jre-%{javaver} java-%{javaver} jre = %{javaver}
 Provides:	java-%{origin} = %{version}-%{release}
 Provides:	java = %{javaver}
