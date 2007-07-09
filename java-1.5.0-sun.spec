@@ -147,6 +147,8 @@ Summary:	TrueType fonts for %{origin} JVMs
 Group:		System/Fonts/True type
 Requires:	%{name} = %{version}-%{release} freetype-tools
 Requires:	mkfontdir
+Requires(post): fontconfig
+Requires(postun): fontconfig
 Provides:	java-fonts = %{javaver} java-%{javaver}-fonts
 Conflicts:	java-%{javaver}-ibm-fonts java-%{javaver}-blackdown-fonts
 Conflicts:	java-%{javaver}-bea-fonts
@@ -474,10 +476,12 @@ update-alternatives --install %{fontdir}/LucidaBrightDemiBold.ttf LucidaBrightDe
 
 mkfontscale %{fontdir}
 mkfontdir %{fontdir}
+fc-cache
 
 %postun fonts
 if [ "$1" = "0" ]; then
 update-alternatives --remove LucidaBrightDemiBold.ttf %{_jvmdir}/%{jredir}/lib/fonts/LucidaBrightDemiBold.ttf
+fc-cache
 fi
 
 if [ -d %{fontdir} ]; then
