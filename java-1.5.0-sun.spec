@@ -41,7 +41,7 @@
 
 Name:		java-%{javaver}-%{origin}
 Version:	%{javaver}.%{buildver}
-Release:	%mkrel 9
+Release:	%mkrel 10
 Summary:	Java Runtime Environment for %{name}
 License:	Operating System Distributor License for Java (DLJ)
 Group:		Development/Java
@@ -62,7 +62,7 @@ Provides:	java = %{javaver}
 Obsoletes:	j2re
 Requires:	update-alternatives
 Requires:	jpackage-utils >= 0:1.5.38
-BuildArch:	i586 x86_64
+ExclusiveArch:	%{ix86} x86_64
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	jpackage-utils >= 0:1.5.38 sed desktop-file-utils
 %ifnarch x86_64
