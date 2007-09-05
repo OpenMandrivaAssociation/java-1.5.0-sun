@@ -41,7 +41,7 @@
 
 Name:		java-%{javaver}-%{origin}
 Version:	%{javaver}.%{buildver}
-Release:	%mkrel 10
+Release:	%mkrel 11
 Summary:	Java Runtime Environment for %{name}
 License:	Operating System Distributor License for Java (DLJ)
 Group:		Development/Java
@@ -49,8 +49,6 @@ URL:		http://java.sun.com/j2se/%{javaver}
 Source0:	http://download.java.net/dlj/binaries/jdk-%{cvsversion}-dlj-linux-i586.bin
 Source1:	http://download.java.net/dlj/binaries/jdk-%{cvsversion}-dlj-linux-amd64.bin
 Source3:	jdk-dlj-ubuntu-svn20070206.tar.bz2
-Source4:	java-sun-menu.xdg
-Source5:	java-sun-directory.xdg
 Source6:	java.sh
 Source7:	java.csh
 Patch0:		jdk-1.5.0_10-fix-control-panel.patch
@@ -206,9 +204,6 @@ done
 mv %{name}-java.desktop debian/sharedmimeinfo %{jdkbundle}/jre/lib
 
 %ifnarch x86_64
-sed %{SOURCE4} -e "s#@NAME@#%{name}#g" -e "s#@VERSION@#%{over}#g" > mandriva-%{name}.menu
-sed %{SOURCE5} -e "s#@NAME@#%{name}#g" -e "s#@VERSION@#%{over}#g" > mandriva-%{name}.directory
-
 sed -i -e "s#PATH=/usr/local/java/bin#PATH=%{jrebindir}#" %{jdkbundle}/bin/java-rmi.cgi
 
 # fix up (create new) HtmlConverter
@@ -280,9 +275,6 @@ popd
 %ifnarch x86_64
 
 install -m644 jre/plugin/desktop/sun_java.png -D %{buildroot}%{_datadir}/pixmaps/%{name}.png
-
-install -m644 ../mandriva-%{name}.menu -D %{buildroot}%{_sysconfdir}/xdg/menus/applications-merged/mandriva-%{name}.menu
-install -m644 ../mandriva-%{name}.directory -D %{buildroot}%{_datadir}/desktop-directories/mandriva-%{name}.directory
 
 for desktop in ../*.desktop; do
 	desktop-file-install	--vendor="" \
@@ -514,8 +506,6 @@ fi
 %{_jvmprivdir}/*
 %ifnarch x86_64
 %{_datadir}/applications/*.desktop
-%{_sysconfdir}/xdg/menus/applications-merged/mandriva-%{name}.menu
-%{_datadir}/desktop-directories/mandriva-%{name}.directory
 %{_datadir}/pixmaps/*.png
 %endif
 %dir %{_datadir}/mime
