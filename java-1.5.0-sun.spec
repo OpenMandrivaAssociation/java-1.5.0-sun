@@ -41,7 +41,7 @@
 
 Name:		java-%{javaver}-%{origin}
 Version:	%{javaver}.%{buildver}
-Release:	%mkrel 12
+Release:	%mkrel 13
 Summary:	Java Runtime Environment for %{name}
 License:	Operating System Distributor License for Java (DLJ)
 Group:		Development/Java
@@ -55,6 +55,7 @@ Provides:	jre-%{origin} = %{version}-%{release} j2re = %{version}-%{release}
 Provides:	jre-%{javaver} java-%{javaver} jre = %{javaver}
 Provides:	java-%{origin} = %{version}-%{release}
 Provides:	java = %{javaver}
+Provides:	%{_lib}%{name} = %{version}-%{release}
 Obsoletes:	j2re
 Requires:	update-alternatives
 Requires:	jpackage-utils >= 0:1.5.38
@@ -78,10 +79,10 @@ Provides:	javaws-menu
 %endif
 # DLJ license requires these to be part of the JRE
 %ifnarch x86_64
-Requires:	%{name}-plugin = %{version}-%{release}
+Requires:	%{_lib}%{name}-plugin = %{version}-%{release}
 %endif
-Requires:	%{name}-alsa = %{version}-%{release}
-Requires:	%{name}-jdbc = %{version}-%{release}
+Requires:	%{_lib}%{name}-alsa = %{version}-%{release}
+Requires:	%{_lib}%{name}-jdbc = %{version}-%{release}
 Requires:	%{name}-fonts = %{version}-%{release}
 
 %description
@@ -97,7 +98,7 @@ Provides:	java-sdk-%{javaver} java-sdk = %{javaver} jdk = %{javaver}
 Provides:	java-devel-%{origin} = %{version}-%{release}
 Provides:       java-%{javaver}-devel java-devel = %{javaver}
 Obsoletes:	j2sdk
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{_lib}%{name} = %{version}-%{release}
 
 %description	devel
 The Java(tm) Development Kit (JDK(tm)) contains the software and tools that
@@ -115,7 +116,7 @@ This package contains source files for %{name}.
 %package	demo
 Summary:	Demonstration files for %{name}
 Group:		Development/Java
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{_lib}%{name} = %{version}-%{release}
 # Without this a requirement on libjava_crw_demo_g.so is added which
 # is not in the main java package. libjava_crw_demo.so is but not "_g".
 AutoReq:        0
@@ -127,8 +128,9 @@ This package contains demonstration files for %{name}.
 %package	plugin
 Summary:	Browser plugin files for %{name}
 Group:		Networking/WWW
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{_lib}%{name} = %{version}-%{release}
 Provides:	java-plugin = %{javaver} java-%{javaver}-plugin = %{version}
+Provides:	%{_lib}%{name}-plugin = %{version}-%{release}
 Conflicts:	java-%{javaver}-ibm-plugin java-%{javaver}-blackdown-plugin
 Conflicts:	java-%{javaver}-bea-plugin
 Obsoletes:	java-1.3.1-plugin java-1.4.0-plugin java-1.4.1-plugin java-1.4.2-plugin
@@ -156,7 +158,8 @@ This package contains the TrueType fonts for %{origin} JVMs.
 %package	alsa
 Summary:	ALSA support for %{name}
 Group:		Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{_lib}%{name} = %{version}-%{release}
+Provides:	%{_lib}%{name}-alsa = %{version}-%{release}
 
 %description	alsa
 This package contains Advanced Linux Sound Architecture (ALSA) support
@@ -165,7 +168,8 @@ libraries for %{name}.
 %package	jdbc
 Summary:	JDBC/ODBC bridge driver for %{name}
 Group:		Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{_lib}%{name} = %{version}-%{release}
+Provides:	%{_lib}%{name}-jdbc = %{version}-%{release}
 AutoReq:	0
 
 %description	jdbc
