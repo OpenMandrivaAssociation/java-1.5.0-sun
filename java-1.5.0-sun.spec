@@ -3,12 +3,14 @@
 %define	javaver		1.5.0
 %define	cvsver		1_5_0
 %define	over		5.0
-%define	buildver	11
+%define	buildver	13
 
 %define	cvsversion	%{cvsver}_%{buildver}
 
 %define	javaws_ver	%{javaver}
 %define	javaws_version	%{cvsversion}
+
+%define ubuntu_svnrev   r263
 
 %define	jdkbundle	jdk%{javaver}_%{buildver}
 %define	sdklnk		java-%{javaver}-%{origin}
@@ -41,14 +43,15 @@
 
 Name:		java-%{javaver}-%{origin}
 Version:	%{javaver}.%{buildver}
-Release:	%mkrel 13
+Release:	%mkrel 1.0.1
 Summary:	Java Runtime Environment for %{name}
 License:	Operating System Distributor License for Java (DLJ)
 Group:		Development/Java
 URL:		http://java.sun.com/j2se/%{javaver}
 Source0:	http://download.java.net/dlj/binaries/jdk-%{cvsversion}-dlj-linux-i586.bin
 Source1:	http://download.java.net/dlj/binaries/jdk-%{cvsversion}-dlj-linux-amd64.bin
-Source3:	jdk-dlj-ubuntu-svn20070206.tar.bz2
+# svn co -%{ubuntu_svnrev} --username guest --password "" https://jdk-distros.dev.java.net/svn/jdk-distros/trunk/linux/ubuntu/sun-java5/debian/
+Source3:	jdk-5-dlj-ubuntu-%{ubuntu_svnrev}.tar.bz2
 Patch0:		jdk-1.5.0_10-fix-control-panel.patch
 Provides:	jre-%{javaver}-%{origin} = %{version}-%{release}
 Provides:	jre-%{origin} = %{version}-%{release} j2re = %{version}-%{release}
