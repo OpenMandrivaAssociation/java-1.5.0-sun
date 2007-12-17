@@ -63,7 +63,6 @@ Obsoletes:	j2re
 Requires:	update-alternatives
 Requires:	jpackage-utils >= 0:1.5.38
 ExclusiveArch:	%{ix86} x86_64
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	jpackage-utils >= 0:1.5.38 sed desktop-file-utils
 %ifnarch x86_64
 Provides:	javaws = %{javaws_ver}
