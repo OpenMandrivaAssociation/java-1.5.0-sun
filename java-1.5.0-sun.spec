@@ -1,16 +1,16 @@
 %define	origin		sun
 %define	priority	1503
 %define	javaver		1.5.0
-%define	cvsver		1_5_0
+%define	cvsver		5.0u14
 %define	over		5.0
-%define	buildver	13
+%define	buildver	14
 
-%define	cvsversion	%{cvsver}_%{buildver}
+%define	cvsversion	%{cvsver}
 
 %define	javaws_ver	%{javaver}
 %define	javaws_version	%{cvsversion}
 
-%define ubuntu_svnrev   r265
+%define ubuntu_svnrev	r273
 
 %define	jdkbundle	jdk%{javaver}_%{buildver}
 %define	sdklnk		java-%{javaver}-%{origin}
@@ -43,7 +43,7 @@
 
 Name:		java-%{javaver}-%{origin}
 Version:	%{javaver}.%{buildver}
-Release:	%mkrel 1.0.2
+Release:	%mkrel 1.0.0
 Summary:	Java Runtime Environment for %{name}
 License:	Operating System Distributor License for Java (DLJ)
 Group:		Development/Java
@@ -86,6 +86,7 @@ Requires:	%{_lib}%{name}-plugin = %{version}-%{release}
 Requires:	%{_lib}%{name}-alsa = %{version}-%{release}
 Requires:	%{_lib}%{name}-jdbc = %{version}-%{release}
 Requires:	%{name}-fonts = %{version}-%{release}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 This package contains the Java Runtime Environment for %{name}
@@ -98,7 +99,7 @@ Provides:	java-sdk-%{javaver}-%{origin} = %{version}-%{release}
 Provides:	java-sdk-%{origin} = %{version}-%{release} j2sdk = %{version}-%{release}
 Provides:	java-sdk-%{javaver} java-sdk = %{javaver} jdk = %{javaver}
 Provides:	java-devel-%{origin} = %{version}-%{release}
-Provides:       java-%{javaver}-devel java-devel = %{javaver}
+Provides:	java-%{javaver}-devel java-devel = %{javaver}
 Obsoletes:	j2sdk
 Requires:       %{_lib}%{name} = %{version}-%{release}
 
