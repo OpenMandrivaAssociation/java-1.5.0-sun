@@ -43,7 +43,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}.%{buildver}
-Release:        %mkrel 1.0.0
+Release:        %mkrel 1.0.1
 Summary:        Java Runtime Environment for %{name}
 License:        Operating System Distributor License for Java (DLJ)
 Group:          Development/Java
@@ -60,7 +60,8 @@ Provides:       java-%{origin} = %{version}-%{release}
 Provides:       java = %{javaver}
 Provides:       %{_lib}%{name} = %{version}-%{release}
 Obsoletes:      j2re
-Requires:       update-alternatives
+Requires(post): update-alternatives
+Requires(postun): update-alternatives
 Requires:       jpackage-utils >= 0:1.5.38
 ExclusiveArch:  %{ix86} x86_64
 BuildRequires:  jpackage-utils >= 0:1.5.38 sed desktop-file-utils
@@ -94,7 +95,8 @@ This package contains the Java Runtime Environment for %{name}
 %package devel
 Summary:        Java Development Kit for %{name}
 Group:          Development/Java
-Requires:       update-alternatives
+Requires(post): update-alternatives
+Requires(postun): update-alternatives
 Provides:       java-sdk-%{javaver}-%{origin} = %{version}-%{release}
 Provides:       java-sdk-%{origin} = %{version}-%{release} j2sdk = %{version}-%{release}
 Provides:       java-sdk-%{javaver} java-sdk = %{javaver} jdk = %{javaver}
@@ -132,6 +134,8 @@ This package contains demonstration files for %{name}.
 Summary:        Browser plugin files for %{name}
 Group:          Networking/WWW
 Requires:       %{_lib}%{name} = %{version}-%{release}
+Requires(post): update-alternatives
+Requires(postun): update-alternatives
 Provides:       java-plugin = %{javaver} java-%{javaver}-plugin = %{version}
 Provides:       %{_lib}%{name}-plugin = %{version}-%{release}
 Conflicts:      java-%{javaver}-ibm-plugin java-%{javaver}-blackdown-plugin
@@ -148,8 +152,8 @@ Summary:        TrueType fonts for %{origin} JVMs
 Group:          System/Fonts/True type
 Requires:       %{name} = %{version}-%{release} freetype-tools
 Requires:       mkfontdir
-Requires(post): fontconfig
-Requires(postun): fontconfig
+Requires(post): fontconfig update-alternatives
+Requires(postun): fontconfig update-alternatives
 Provides:       java-fonts = %{javaver} java-%{javaver}-fonts
 Conflicts:      java-%{javaver}-ibm-fonts java-%{javaver}-blackdown-fonts
 Conflicts:      java-%{javaver}-bea-fonts
@@ -435,13 +439,13 @@ update-alternatives --install %{_jvmdir}/java-%{javaver} java_sdk_%{javaver} %{_
 update-alternatives --install %{_libdir}/mozilla/plugins/libjavaplugin_oji.so libjavaplugin_oji.so %{pluginname} %{priority}
 
 %postun plugin
-if [ "$1" = "0" ]; then
+if ! [ -e "%{pluginname}" ]; then
 update-alternatives --remove libjavaplugin_oji.so %{pluginname}
 fi
 %endif
 
 %postun
-if [ "$1" = "0" ]; then
+if ! [ -e "%{jrebindir}/java" ]; then
 update-alternatives --remove java %{jrebindir}/java
 update-alternatives --remove \
         jce_%{javaver}_%{origin}_local_policy \
@@ -455,7 +459,7 @@ fi
 %{clean_mime_database}
 
 %postun devel
-if [ "$1" = "0" ]; then
+if ! [ -e "%{sdkbindir}/javac" ]; then
 update-alternatives --remove javac %{sdkbindir}/javac
 update-alternatives --remove java_sdk_%{origin}  %{_jvmdir}/%{sdklnk}
 update-alternatives --remove java_sdk_%{javaver} %{_jvmdir}/%{sdklnk}
@@ -473,7 +477,7 @@ mkfontdir %{fontdir}
 fc-cache
 
 %postun fonts
-if [ "$1" = "0" ]; then
+if ! [ -e %{_jvmdir}/%{jredir}/lib/fonts/LucidaBrightDemiBold.ttf ]; then
 update-alternatives --remove LucidaBrightDemiBold.ttf %{_jvmdir}/%{jredir}/lib/fonts/LucidaBrightDemiBold.ttf
 fc-cache
 fi
