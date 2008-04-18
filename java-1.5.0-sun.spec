@@ -43,7 +43,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}.%{buildver}
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        Java Runtime Environment for %{name}
 License:        Operating System Distributor License for Java (DLJ)
 Group:          Development/Java
@@ -264,7 +264,7 @@ install -d %{buildroot}%{_jvmdir}/%{jredir}/lib/endorsed
 # jce policy file handling
 install -d %{buildroot}%{_jvmprivdir}/%{name}/jce/vanilla
 for file in local_policy.jar US_export_policy.jar; do
-  ln -s %{_jvmdir}/%{jredir}/lib/security/$file \
+  mv %{buildroot}%{_jvmdir}/%{jredir}/lib/security/$file \
     %{buildroot}%{_jvmprivdir}/%{name}/jce/vanilla
   # for ghosts
   touch %{buildroot}%{_jvmdir}/%{jredir}/lib/security/$file
@@ -398,6 +398,11 @@ update-alternatives --install %{_bindir}/java java %{jrebindir}/java %{priority}
 # jre file with environment variables with has filename with higher number value than sdk to ensure
 # sdk gets processed first
 
+# (Anssi 04/2008) bug #40201
+# These used to be broken real files:
+for file in %{_jvmdir}/%{jredir}/lib/security/local_policy.jar %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar; do
+        [ -L "$file" ] || rm -f "$file"
+done
 update-alternatives \
 --install \
         %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar \
@@ -504,8 +509,8 @@ fi
 %ifnarch x86_64
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/javaws.policy
 %endif
-%{_jvmdir}/%{jredir}/lib/security/local_policy.jar
-%{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
+%ghost %{_jvmdir}/%{jredir}/lib/security/local_policy.jar
+%ghost %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
 %{_jvmdir}/%{jrelnk}
 %{_jvmjardir}/%{jrelnk}
 %{_jvmprivdir}/*
