@@ -46,7 +46,7 @@ Version:        %{javaver}.%{buildver}
 %if %mdkversion < 201000
 %define subrel  1
 %endif
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        Java Runtime Environment for %{name}
 License:        Operating System Distributor License for Java (DLJ)
 Group:          Development/Java
@@ -155,8 +155,8 @@ Summary:        TrueType fonts for %{origin} JVMs
 Group:          System/Fonts/True type
 Requires:       %{name} = %{version}-%{release} freetype-tools
 Requires:       mkfontdir
-Requires(post): fontconfig update-alternatives
-Requires(postun): fontconfig update-alternatives
+Requires(post): update-alternatives
+Requires(postun): update-alternatives
 Provides:       java-fonts = %{javaver} java-%{javaver}-fonts
 Conflicts:      java-%{javaver}-ibm-fonts java-%{javaver}-blackdown-fonts
 Conflicts:      java-%{javaver}-bea-fonts
@@ -482,12 +482,10 @@ update-alternatives --install %{fontdir}/LucidaBrightDemiBold.ttf LucidaBrightDe
 
 mkfontscale %{fontdir}
 mkfontdir %{fontdir}
-fc-cache
 
 %postun fonts
 if ! [ -e %{_jvmdir}/%{jredir}/lib/fonts/LucidaBrightDemiBold.ttf ]; then
 update-alternatives --remove LucidaBrightDemiBold.ttf %{_jvmdir}/%{jredir}/lib/fonts/LucidaBrightDemiBold.ttf
-fc-cache
 fi
 
 if [ -d %{fontdir} ]; then
