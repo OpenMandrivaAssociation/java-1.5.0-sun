@@ -41,12 +41,18 @@
 # This prevents aggressive stripping.
 %define        debug_package    %{nil}
 
+%if %mandriva_branch == Cooker
+# Cooker
+%define release %mkrel 2
+%else
+# Old distros
+%define subrel 1
+%define release %mkrel 0
+%endif
+
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}.%{buildver}
-%if %mdkversion < 201000
-%define subrel  1
-%endif
-Release:        %mkrel 2
+Release:        %{release}
 Summary:        Java Runtime Environment for %{name}
 License:        Operating System Distributor License for Java (DLJ)
 Group:          Development/Java
