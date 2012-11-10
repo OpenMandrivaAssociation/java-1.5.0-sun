@@ -1,0 +1,26 @@
+--- i586-jdk/jre/bin/ControlPanel~	2005-12-17 12:33:16.000000000 +0100
++++ i586-jdk/jre/bin/ControlPanel	2006-05-06 23:59:14.871549720 +0200
+@@ -85,22 +85,12 @@
+ 	    proc="`uname -m`"
+ 	    ;;
+     esac
+-    linktest="-L"
+ else
+     proc=`uname -p`
+-    linktest="-h"
+ fi
+ 
+ # Resolve symlinks. See 4152645.
+-while [ "${linktest}" "${PRG}" ]; do
+-    ls=`/usr/bin/ls -ld "${PRG}"`
+-    link=`/usr/bin/expr "${ls}" : '^.*-> \(.*\)$'`
+-    if /usr/bin/expr "${link}" : '^/' > /dev/null; then
+-	PRG="${link}"
+-    else
+-	PRG="`dirname ${PRG}`/${link}"
+-    fi
+-done
++PRG=`readlink -f $PRG`
+ 
+ APPHOME=`dirname "${PRG}"`/..
+ JREHOME=${APPHOME}/jre
