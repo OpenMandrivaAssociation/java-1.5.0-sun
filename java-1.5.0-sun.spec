@@ -56,7 +56,7 @@ Release:        %{release}
 Summary:        Java Runtime Environment for %{name}
 License:        Operating System Distributor License for Java (DLJ)
 Group:          Development/Java
-URL:            http://java.sun.com/j2se/%{javaver}
+URL:            https://java.sun.com/j2se/%{javaver}
 Source0:        http://download.java.net/dlj/binaries/jdk-%{cvsversion}-dlj-linux-i586.bin
 Source1:        http://download.java.net/dlj/binaries/jdk-%{cvsversion}-dlj-linux-amd64.bin
 # svn co -%{ubuntu_svnrev} --username guest --password "" https://jdk-distros.dev.java.net/svn/jdk-distros/trunk/linux/ubuntu/sun-java5/debian/
